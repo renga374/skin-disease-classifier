@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+<title>AI Skin Disease Detection</title>
+ 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+ 
+<style>
+ 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+ 
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    overflow-x:hidden;
+ 
+    /* 🎯 CLEAN BLACK + GOLD BACKGROUND */
+    background:
+    radial-gradient(circle at 15% 20%, rgba(212,175,55,.12), transparent 30%),
+    radial-gradient(circle at 85% 30%, rgba(255,215,0,.08), transparent 35%),
+    radial-gradient(circle at 50% 90%, rgba(212,175,55,.06), transparent 40%),
+    linear-gradient(135deg, #050505, #0a0a0a, #000000);
+ 
+    color:white;
+}
+ 
+.container{
+    width:100%;
+    max-width:950px;
+}
+ 
+.card{
+ 
+    background:rgba(255,255,255,.04);
+ 
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+ 
+    border:1px solid rgba(212,175,55,.18);
+ 
+    border-radius:28px;
+ 
+    padding:45px;
+ 
+    box-shadow:
+    0 0 40px rgba(212,175,55,.08),
+    0 20px 60px rgba(0,0,0,.7);
+ 
+    transition:0.3s ease;
+}
+ 
+.card:hover{
+    border-color:rgba(212,175,55,.35);
+}
+ 
+.title{
+ 
+    text-align:center;
+    font-size:3.1rem;
+    font-weight:800;
+ 
+    /* ✨ SUBTLE GOLD GRADIENT */
+    background:linear-gradient(
+    90deg,
+    #d4af37,
+    #f5d76e,
+    #c9a227
+    );
+ 
+    background-size:200%;
+ 
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+ 
+    animation:goldFlow 5s linear infinite;
+ 
+    margin-bottom:10px;
+}
+ 
+.subtitle{
+ 
+    text-align:center;
+    color:#cfcfcf;
+    margin-bottom:40px;
+    font-size:1.05rem;
+}
+ 
+.upload-box{
+ 
+    border:2px dashed rgba(212,175,55,.25);
+ 
+    border-radius:24px;
+ 
+    padding:60px 40px;
+ 
+    text-align:center;
+ 
+    background:rgba(255,255,255,.03);
+ 
+    transition:.3s ease;
+ 
+    cursor:pointer;
+}
+ 
+.upload-box:hover{
+ 
+    border-color:#d4af37;
+ 
+    transform:translateY(-4px);
+ 
+    background:rgba(212,175,55,.05);
+ 
+    box-shadow:0 0 30px rgba(212,175,55,.12);
+}
+ 
+.upload-icon{
+    font-size:75px;
+    margin-bottom:15px;
+    opacity:0.9;
+}
+ 
+.upload-text{
+    font-size:1.1rem;
+    color:#e5e5e5;
+    margin-bottom:20px;
+}
+ 
+input[type=file]{
+    display:none;
+}
+ 
+.custom-upload{
+ 
+    display:inline-block;
+ 
+    padding:14px 32px;
+ 
+    border-radius:50px;
+ 
+    cursor:pointer;
+ 
+    font-weight:600;
+ 
+    background:linear-gradient(135deg, #d4af37, #f5d76e);
+ 
+    color:#111;
+ 
+    transition:.3s ease;
+ 
+    box-shadow:0 10px 25px rgba(212,175,55,.15);
+}
+ 
+.custom-upload:hover{
+    transform:scale(1.05);
+}
+ 
+.preview{
+    margin-top:25px;
+    text-align:center;
+}
+ 
+.preview img{
+ 
+    width:280px;
+    max-width:100%;
+ 
+    border-radius:18px;
+ 
+    display:none;
+ 
+    margin:auto;
+ 
+    border:1px solid rgba(212,175,55,.25);
+ 
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+ 
+button{
+ 
+    width:100%;
+ 
+    margin-top:35px;
+ 
+    border:none;
+ 
+    border-radius:50px;
+ 
+    padding:18px;
+ 
+    cursor:pointer;
+ 
+    font-size:1.05rem;
+ 
+    font-weight:700;
+ 
+    color:#111;
+ 
+    background:linear-gradient(135deg, #d4af37, #f5d76e);
+ 
+    transition:.3s ease;
+ 
+    box-shadow:0 15px 35px rgba(212,175,55,.15);
+}
+ 
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px rgba(212,175,55,.25);
+}
+ 
+.features{
+ 
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+ 
+    gap:18px;
+ 
+    margin-top:35px;
+}
+ 
+.feature{
+ 
+    background:rgba(255,255,255,.03);
+ 
+    border:1px solid rgba(212,175,55,.12);
+ 
+    padding:20px;
+ 
+    border-radius:18px;
+ 
+    text-align:center;
+ 
+    transition:.3s ease;
+}
+ 
+.feature:hover{
+    transform:translateY(-5px);
+    border-color:rgba(212,175,55,.3);
+}
+ 
+.feature h3{
+    color:#d4af37;
+    margin-bottom:8px;
+}
+ 
+.feature p{
+    color:#cfcfcf;
+}
+ 
+/* ✨ GOLD ANIMATION */
+@keyframes goldFlow{
+0%{background-position:0%;}
+100%{background-position:200%;}
+}
+ 
+@media(max-width:768px){
+ 
+.title{
+    font-size:2.2rem;
+}
+ 
+.features{
+    grid-template-columns:1fr;
+}
+ 
+.card{
+    padding:25px;
+}
+ 
+.upload-box{
+    padding:40px 20px;
+}
+ 
+}
+ 
+</style>
+ 
+</head>
+ 
+<body>
+ 
+<div class="container">
+ 
+<div class="card">
+ 
+<h1 class="title">  Skin Analyzer</h1>
+ 
+<p class="subtitle">
+Upload a skin image and get instant analysis
+</p>
+ 
+<form action="/predict"
+      method="POST"
+      enctype="multipart/form-data">
+ 
+<div class="upload-box">
+ 
+<div class="upload-icon">📷</div>
+ 
+<div class="upload-text">
+Drag & Drop or Choose an Image
+</div>
+ 
+<label for="file" class="custom-upload">
+Choose Image
+</label>
+ 
+<input type="file"
+       id="file"
+       name="file"
+       accept="image/*"
+       required>
+ 
+<div class="preview">
+<img id="previewImage">
+</div>
+ 
+</div>
+ 
+<button type="submit">
+ Analyze Image
+</button>
+ 
+</form>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<script>
+ 
+const dropArea = document.querySelector(".upload-box");
+const fileInput = document.getElementById("file");
+const preview = document.getElementById("previewImage");
+ 
+dropArea.addEventListener("dragover",(e)=>{
+    e.preventDefault();
+    dropArea.style.borderColor="#d4af37";
+});
+ 
+dropArea.addEventListener("dragleave",()=>{
+    dropArea.style.borderColor="rgba(212,175,55,.25)";
+});
+ 
+dropArea.addEventListener("drop",(e)=>{
+    e.preventDefault();
+ 
+    const files = e.dataTransfer.files;
+ 
+    if(files.length>0){
+        fileInput.files = files;
+        preview.src = URL.createObjectURL(files[0]);
+        preview.style.display = "block";
+    }
+});
+ 
+fileInput.addEventListener("change",function(){
+ 
+    if(this.files.length>0){
+        preview.src = URL.createObjectURL(this.files[0]);
+        preview.style.display = "block";
+    }
+ 
+});
+ 
+</script>
+ 
+</body>
+</html>
