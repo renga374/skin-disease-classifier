@@ -197,8 +197,9 @@ Upload a skin image and receive an AI-powered prediction with a confidence score
 * Multi-image Analysis
 
  📸screenshots
-<img width="1365" height="720" alt="Screenshot 2026-06-07 165706" src="https://github.com/user-attachments/assets/6e871316-6580-41c3-85a3-01358febd5e3" />
+
 <img width="1365" height="718" alt="Screenshot 2026-06-07 165534" src="https://github.com/user-attachments/assets/8ea58fd5-d8c7-411f-ad2f-aee362a4853a" />
+<img width="1365" height="720" alt="Screenshot 2026-06-07 165706" src="https://github.com/user-attachments/assets/6e871316-6580-41c3-85a3-01358febd5e3" />
 
 ## ⚠️ Disclaimer
 
